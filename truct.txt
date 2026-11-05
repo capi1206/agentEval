@@ -1,0 +1,37 @@
+chatbot_evaluator/
+├── .env.example                     # Template for API keys (OpenAI, TypeSafe Jev API key, etc.)
+├── requirements.txt                 # Project dependencies (BeautifulSoup, Pydantic, pytest, requests, etc.)
+├── README.md                        # Quickstart guide & Jev-powered architecture overview
+├── docs/
+│   └── architecture_spec.md         # Detailed specification & Jev evaluation roadmap
+├── data/                            # Local workspace for artifacts
+│   ├── raw/                         # Raw scraped HTML/JSON from websites
+│   ├── processed/                   # Cleaned chunks, topics, and generated questions
+│   └── reports/                     # JSON/Markdown evaluation logs, probability distributions & metrics
+├── src/                             # Source code root
+│   ├── __init__.py
+│   ├── models/                      # [Model] Data schemas, Pydantic validation models
+│   │   ├── __init__.py
+│   │   ├── chunk_model.py           # Schemas for scraped text chunks and topics
+│   │   ├── question_model.py        # Schemas for generated test questions
+│   │   └── evaluation_model.py      # Schemas for Jev evaluation criteria, scores, and probability outputs
+│   ├── services/                    # External integrations & core data handlers
+│   │   ├── __init__.py
+│   │   ├── scraper_service.py       # Web scraping logic (BeautifulSoup / Playwright)
+│   │   ├── llm_service.py           # Wrapper for LLM generation (used for topic digestion & question gen)
+│   │   ├── jev_service.py           # [NEW] Client wrapper for Jev evaluation API (typed choices, scores, Noul probabilities)
+│   │   └── chat_client.py           # Interface to query the target chatbot under test
+│   ├── controllers/                 # [Controller] Business logic & pipeline orchestrators
+│   │   ├── __init__.py
+│   │   ├── pipeline_controller.py   # Orchestrates the full end-to-end evaluation flow
+│   │   ├── digestion_controller.py  # Handles chunking, topic extraction, and question gen
+│   │   └── evaluation_controller.py # Runs chat simulation and coordinates Jev-powered evaluation
+│   └── views/                       # [View] User interfaces (CLI, REST API, or Web dashboard)
+│       ├── __init__.py
+│       └── cli.py                   # Command-line interface to run evaluation tasks
+└── tests/                           # Test suite
+    ├── __init__.py
+    ├── test_scraper.py              # Unit tests for website data extraction
+    ├── test_digestion.py            # Unit tests for chunking & topic extraction
+    ├── test_simulator.py            # Integration tests for chat interaction flows
+    └── test_evaluator.py            # Unit/Integration tests for Jev evaluation metrics and logic
